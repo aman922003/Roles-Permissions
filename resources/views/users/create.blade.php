@@ -1,99 +1,106 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex justify-between">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Users / Create
-            </h2>
+        <div class="flex justify-between items-center">
+            <h2 class="font-semibold text-2xl text-gray-800 leading-tight">Users / Create</h2>
             <a href="{{ route('users.index') }}"
-                class="bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium px-5 py-2 rounded-lg shadow-md transition duration-200 ease-in-out">Back</a>
+                class="bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium px-5 py-2 rounded-lg shadow-md transition">
+                Back
+            </a>
         </div>
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
+        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white shadow-lg rounded-xl overflow-hidden">
+                <div class="p-8 text-gray-900">
                     <form action="{{ route('users.store') }}" method="post">
                         @csrf
-                        <div>
-                            <label for="name" class="text-lg font-medium">Name</label>
-                            <div class="my-3">
+
+                        <div class="space-y-6">
+                            <!-- Name -->
+                            <div>
+                                <label for="name" class="block text-sm font-semibold text-gray-700">Name</label>
                                 <input id="name" name="name" type="text" placeholder="Enter Name"
                                     value="{{ old('name') }}"
-                                    class="border border-gray-300 shadow-sm w-1/2 rounded-lg px-3 py-2">
+                                    class="mt-2 block w-full border border-gray-300 rounded-lg shadow-sm px-4 py-2 focus:ring-emerald-500 focus:border-emerald-500">
                                 @error('name')
-                                    <p class="text-red-400 font-medium">
-                                        {{ $message }}
-                                    </p>
+                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                 @enderror
                             </div>
 
-                            <div class="my-3">
-                                <input id="email" name="email" type="text" placeholder="Enter Email"
+                            <!-- Email -->
+                            <div>
+                                <label for="email" class="block text-sm font-semibold text-gray-700">Email</label>
+                                <input id="email" name="email" type="email" placeholder="Enter Email"
                                     value="{{ old('email') }}"
-                                    class="border border-gray-300 shadow-sm w-1/2 rounded-lg px-3 py-2">
+                                    class="mt-2 block w-full border border-gray-300 rounded-lg shadow-sm px-4 py-2 focus:ring-emerald-500 focus:border-emerald-500">
                                 @error('email')
-                                    <p class="text-red-400 font-medium">
-                                        {{ $message }}
-                                    </p>
+                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                 @enderror
                             </div>
 
-                            <div class="my-3">
+                            <!-- Password -->
+                            <div>
+                                <label for="password" class="block text-sm font-semibold text-gray-700">Password</label>
                                 <input id="password" name="password" type="password" placeholder="Enter Password"
-                                    class="border border-gray-300 shadow-sm w-1/2 rounded-lg px-3 py-2">
+                                    class="mt-2 block w-full border border-gray-300 rounded-lg shadow-sm px-4 py-2 focus:ring-emerald-500 focus:border-emerald-500">
                                 @error('password')
-                                    <p class="text-red-400 font-medium">
-                                        {{ $message }}
-                                    </p>
+                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                 @enderror
                             </div>
 
-                            <div class="my-3">
-                                <input id="age" name="age" type="number" placeholder="Enter Age" min="0"
+                            <!-- Age -->
+                            <div>
+                                <label for="age" class="block text-sm font-semibold text-gray-700">Age</label>
+                                <input id="age" name="age" type="number" min="0" placeholder="Enter Age"
                                     value="{{ old('age') }}"
-                                    class="border border-gray-300 shadow-sm w-1/2 rounded-lg px-3 py-2">
+                                    class="mt-2 block w-full border border-gray-300 rounded-lg shadow-sm px-4 py-2 focus:ring-emerald-500 focus:border-emerald-500">
                                 @error('age')
-                                    <p class="text-red-400 font-medium">
-                                        {{ $message }}
-                                    </p>
+                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                 @enderror
                             </div>
 
-                            <div class="my-3">
+                            <!-- Gender -->
+                            <div>
+                                <label for="gender" class="block text-sm font-semibold text-gray-700">Gender</label>
                                 <select id="gender" name="gender"
-                                    class="border border-gray-300 shadow-sm w-1/2 rounded-lg px-3 py-2">
-                                    <option value="" disabled {{ old('gender') ? '' : 'selected' }}>Select Gender
-                                    </option>
+                                    class="mt-2 block w-full border border-gray-300 rounded-lg shadow-sm px-4 py-2 bg-white focus:ring-emerald-500 focus:border-emerald-500">
+                                    <option value="" disabled {{ old('gender') ? '' : 'selected' }}>Select Gender</option>
                                     <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>Male</option>
-                                    <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>Female
-                                    </option>
+                                    <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>Female</option>
                                     <option value="other" {{ old('gender') == 'other' ? 'selected' : '' }}>Other</option>
                                 </select>
                                 @error('gender')
-                                    <p class="text-red-400 font-medium">
-                                        {{ $message }}
-                                    </p>
+                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                 @enderror
                             </div>
 
-                            <div class="grid grid-cols-5 gap-x-6 gap-y-4 mt-4">
-                                @foreach ($roles as $role)
-                                    <div class="flex items-center space-x-2">
-                                        <input type="checkbox" id="role-{{ $role->id }}" name="roles[]"
-                                            value="{{ $role->id }}" class="rounded text-emerald-600 focus:ring-emerald-500"
-                                            {{ in_array($role->id, old('roles', [])) ? 'checked' : '' }}>
-                                        <label for="role-{{ $role->id }}" class="text-gray-700 text-sm">
-                                            {{ $role->name }}
+                            <!-- Roles -->
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Assign Roles</label>
+                                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                                    @foreach ($roles as $role)
+                                        <label class="flex items-center space-x-2 text-sm font-medium text-gray-700">
+                                            <input type="checkbox" id="role-{{ $role->id }}" name="roles[]"
+                                                value="{{ $role->id }}"
+                                                class="rounded text-emerald-600 focus:ring-emerald-500"
+                                                {{ in_array($role->id, old('roles', [])) ? 'checked' : '' }}>
+                                            <span>{{ $role->name }}</span>
                                         </label>
-                                    </div>
-                                @endforeach
+                                    @endforeach
+                                </div>
+                                @error('roles')
+                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                @enderror
                             </div>
 
-                            <button type="submit"
-                                class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium px-5 py-2 w-40 rounded-lg shadow-md transition duration-200 ease-in-out mt-4">
-                                Create
-                            </button>
+                            <!-- Submit Button -->
+                            <div>
+                                <button type="submit"
+                                    class="w-full sm:w-40 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold py-2 px-4 rounded-lg shadow transition duration-150">
+                                    Create
+                                </button>
+                            </div>
                         </div>
                     </form>
                 </div>

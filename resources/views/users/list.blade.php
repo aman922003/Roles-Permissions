@@ -27,6 +27,7 @@
                             <th class="px-6 py-4 border-b">Password</th>
                             <th class="px-6 py-4 border-b">Age</th>
                             <th class="px-6 py-4 border-b">Gender</th>
+                            <th class="px-6 py-4 border-b">Role</th>
                             <th class="px-6 py-4 border-b">Created</th>
                             <th class="px-6 py-4 border-b text-center">Action</th>
                         </tr>
@@ -51,8 +52,16 @@
                                     {{ $user->gender }}
                                 </td>
                                 <td class="px-6 py-4">
+                                    @foreach ($user->getRoleNames() as $role)
+                                        <span class="inline-block bg-indigo-100 text-indigo-700 text-xs px-2 py-1 rounded mr-1">
+                                            {{ $role }}
+                                        </span>
+                                    @endforeach
+                                </td>
+                                <td class="px-6 py-4">
                                     {{ $user->created_at->format('d M Y') }}
                                 </td>
+
                                 <td class="px-6 py-4 text-center">
                                     <div class="flex justify-center items-center gap-3">
                                         @can('edit users')

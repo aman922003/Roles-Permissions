@@ -11,6 +11,9 @@ use Illuminate\Routing\Controllers\Middleware;
 
 class RoleController extends Controller implements HasMiddleware
 {
+     /**
+     * Assign Permissions using Middleware.
+     */
     public static function middleware()
     {
         return[

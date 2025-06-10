@@ -11,13 +11,16 @@ use Illuminate\Routing\Controllers\Middleware;
 
 class PermissionController extends Controller implements HasMiddleware
 {
+     /**
+     * Assign Permissions using Middleware.
+     */
     public static function middleware()
     {
-        return[
-            new Middleware('permission:view permissions',only: ['index']),
-            new Middleware('permission:edit permissions',only: ['edit']),
-            new Middleware('permission:create permissions',only: ['create']),
-            new Middleware('permission:delete permissions',only: ['destroy']),
+        return [
+            new Middleware('permission:view permissions', only: ['index']),
+            new Middleware('permission:edit permissions', only: ['edit']),
+            new Middleware('permission:create permissions', only: ['create']),
+            new Middleware('permission:delete permissions', only: ['destroy']),
         ];
     }
 
@@ -45,7 +48,6 @@ class PermissionController extends Controller implements HasMiddleware
                 'name' => 'required|unique:permissions|min:3'
             ]
         );
-        // dd('hello');
         if ($validator->passes()) {
             Permission::create(['name' => $request->name]);
             return redirect()->route('permissions.index')->with('success', 'permissions added successfully');
@@ -79,26 +81,25 @@ class PermissionController extends Controller implements HasMiddleware
             $permission->save();
             return redirect()->route('permissions.index')->with('success', 'permissions updated successfully');
         } else {
-            return redirect()->route('permissions.edit',$id)->withInput()->withErrors($validator);
+            return redirect()->route('permissions.edit', $id)->withInput()->withErrors($validator);
         }
     }
 
     //This method will delete permissions in DB.
     public function destroy(Request $request)
     {
-        $id =  $request->id;
+        $id = $request->id;
         $permission = Permission::find($id);
-        if($permission == null)
-        {
-            session()->flash('error','Permission Not Found');
+        if ($permission == null) {
+            session()->flash('error', 'Permission Not Found');
             return response()->json([
                 'status' => false
             ]);
         }
         $permission->delete();
-        session()->flash('success','Permission Deleted Successfully');
-            return response()->json([
-                'status' => true
-            ]);
+        session()->flash('success', 'Permission Deleted Successfully');
+        return response()->json([
+            'status' => true
+        ]);
     }
 }

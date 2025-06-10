@@ -51,10 +51,15 @@
                                 </a>
                                 @endcan
                                 @can('delete articles')
-                                <a href="javascript:void(0)" onclick="deletePermission({{ $article->id }})"
-                                    class="inline-block bg-red-700 hover:bg-red-800 text-white text-sm font-medium px-4 py-2 rounded-md shadow">
-                                    Delete
-                                </a>
+                                <form action="{{ route('articles.destroy', $article->id) }}" method="POST"
+                                    class="inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                        class="inline-block bg-red-700 hover:bg-red-800 text-white text-sm font-medium px-4 py-2 rounded-md shadow">
+                                        Delete
+                                    </button>
+                                </form>
                                 @endcan
                             </div>
                         </td>
@@ -73,17 +78,23 @@
         function deletePermission(id) {
             if (confirm("Are you sure want to delete?")) {
                 $.ajax({
-                    url: '{{ route("articles.destroy") }}',
-                    type: 'delete',
+                    url: '/articles/' + id, // Updated URL to match route
+                    type: 'DELETE',
                     data: {
-                        id: id
+                        _token: '{{ csrf_token() }}' // Send token as data
                     },
                     dataType: 'json',
-                    headers: {
-                        'x-csrf-token': '{{ csrf_token() }}'
-                    },
                     success: function(response) {
-                        window.location.href = "{{ route("articles.index") }}";
+                        if (response.status) {
+                            // Save message in localStorage temporarily
+                            // localStorage.setItem('successMessage', response.message);
+                            window.location.href = "{{ route('articles.index') }}";
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function(xhr) {
+                        alert('Error: ' + xhr.responseJSON.message);
                     }
                 });
             }

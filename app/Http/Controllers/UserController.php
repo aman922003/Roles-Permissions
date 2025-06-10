@@ -12,11 +12,11 @@ class UserController extends Controller implements HasMiddleware
 {
     public static function middleware()
     {
-        return[
-            new Middleware('permission:view users',only: ['index']),
-            new Middleware('permission:edit users',only: ['edit']),
-            new Middleware('permission:create users',only: ['create']),
-            new Middleware('permission:delete users',only: ['destroy']),
+        return [
+            new Middleware('permission:view users', only: ['index']),
+            new Middleware('permission:edit users', only: ['edit']),
+            new Middleware('permission:create users', only: ['create']),
+            new Middleware('permission:delete users', only: ['destroy']),
         ];
     }
     /**
@@ -44,18 +44,24 @@ class UserController extends Controller implements HasMiddleware
      */
     public function store(Request $request)
     {
+        // Validate request
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255|unique:users,name',
             'email' => 'required|email|max:255|unique:users,email',
             'age' => 'required|integer|min:1|max:120',
             'gender' => 'required|in:male,female,other',
             'password' => 'required|string|min:6',
+            'roles' => 'required|array|min:1',
+            'roles.*' => 'exists:roles,id',
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('users.create')->withInput()->withErrors($validator);
+            return redirect()->route('users.create')
+                ->withInput()
+                ->withErrors($validator);
         }
 
+        // Create new user
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
@@ -64,8 +70,9 @@ class UserController extends Controller implements HasMiddleware
         $user->gender = $request->gender;
         $user->save();
 
-        $roleNames = Role::whereIn('id', $request->roles ?? [])->pluck('name')->toArray();
-        $user->syncRoles($roleNames);
+        // Assign roles (IDs from request converted to names)
+        $roleNames = Role::whereIn('id', $request->roles)->pluck('name')->toArray();
+        $user->syncRoles($roleNames); // Spatie needs names, not IDs
 
         return redirect()->route('users.index')->with('success', 'User created successfully');
     }

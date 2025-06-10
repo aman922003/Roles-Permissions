@@ -10,6 +10,9 @@ use Illuminate\Routing\Controllers\Middleware;
 
 class ArticleController extends Controller implements HasMiddleware
 {
+    /**
+     * Assign Permissions using Middleware.
+     */
     public static function middleware()
     {
         return [
@@ -45,6 +48,7 @@ class ArticleController extends Controller implements HasMiddleware
     {
         $validator = Validator::make($request->all(), [
             'title' => 'required|min:5',
+            'text' => 'required |min:5',
             'auther' => 'required|min:5'
         ]);
         if ($validator->passes()) {
@@ -98,15 +102,10 @@ class ArticleController extends Controller implements HasMiddleware
     {
         $article = Article::find($id);
         if (!$article) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Article Not Found'
-            ]);
+            return redirect()->route('articles.index')->with('error', 'Article not found.');
         }
         $article->delete();
-        return response()->json([
-            'status' => true,
-            'message' => 'Article Deleted Successfully'
-        ]);
+        return redirect()->route('articles.index')->with('success', 'Article deleted successfully.');
     }
+
 }
