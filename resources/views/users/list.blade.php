@@ -24,7 +24,6 @@
                             <th class="px-6 py-4 border-b">#</th>
                             <th class="px-6 py-4 border-b">Name</th>
                             <th class="px-6 py-4 border-b">Email</th>
-                            <th class="px-6 py-4 border-b">Password</th>
                             <th class="px-6 py-4 border-b">Age</th>
                             <th class="px-6 py-4 border-b">Gender</th>
                             <th class="px-6 py-4 border-b">Role</th>
@@ -44,7 +43,6 @@
                                 <td class="px-6 py-4">
                                     {{ $user->email }}
                                 </td>
-                                <td class="px-6 py-4 text-gray-400 italic">Hidden</td>
                                 <td class="px-6 py-4">
                                     {{ $user->age }}
                                 </td>

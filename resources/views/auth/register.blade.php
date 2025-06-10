@@ -55,7 +55,7 @@
         </div>
 
         <!-- Role -->
-        <div class="mb-4">
+        <!-- <div class="mb-4">
             <label for="role" class="block font-medium text-sm text-gray-700">Role</label>
             <select name="role" id="role" class="form-select rounded-md shadow-sm mt-1 w-full">
                 <option value="">Select Role</option>
@@ -72,7 +72,7 @@
                     {{ $message }}
                 </p>
             @enderror
-        </div>
+        </div> -->
 
         <!-- Register Button -->
         <div class="flex items-center justify-between">

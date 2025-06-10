@@ -49,7 +49,8 @@ class RegisteredUserController extends Controller
             'age' => $request->age,
             'gender' => $request->gender,
         ]);
-        $user->assignRole($request->role);
+        $role = Role::where('name', 'User')->first();
+        $user->assignRole($role);
         event(new Registered($user));
 
         // Auth::login($user);
