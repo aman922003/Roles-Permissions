@@ -52,11 +52,12 @@ class ArticleController extends Controller implements HasMiddleware
             'auther' => 'required|min:5'
         ]);
         if ($validator->passes()) {
-            $article = new Article();
-            $article->title = $request->title;
-            $article->text = $request->text;
-            $article->auther = $request->auther;
-            $article->save();
+            // $article = new Article();
+            // $article->title = $request->title;
+            // $article->text = $request->text;
+            // $article->auther = $request->auther;
+            // $article->save();
+            Article::create(request()->only(['title', 'text', 'auther']));
             return redirect()->route('articles.index')->with('success', 'Article Added Successfully');
         } else {
             return redirect()->route('articles.create')->withInput()->withErrors($validator);
