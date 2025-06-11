@@ -27,10 +27,19 @@
                                     </p>
                                 @enderror
                             </div>
-                            <div class="grid grid-cols-5 gap-x-6 gap-y-4 mt-4">
+
+
+                            <!-- Search Input -->
+                            <div class="my-4 w-1/2">
+                                <input type="text" id="permissionSearch" placeholder="Search permissions..."
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-emerald-200 focus:border-emerald-400">
+                            </div>
+
+                            <!-- Permissions List -->
+                            <div id="permissionsList" class="grid grid-cols-5 gap-x-6 gap-y-4 mt-4">
                                 @if ($permissions->isNotEmpty())
                                     @foreach ($permissions as $permission)
-                                        <div class="flex items-center space-x-2">
+                                        <div class="flex items-center space-x-2 permission-item">
                                             <input {{ $hasPermissions->contains($permission->name) ? 'checked' : '' }}
                                                 type="checkbox" id="permission-{{ $permission->id }}" name="permission[]"
                                                 value="{{ $permission->name }}"
@@ -41,7 +50,25 @@
                                         </div>
                                     @endforeach
                                 @endif
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        const searchInput = document.getElementById('permissionSearch');
+                                        const permissionItems = document.querySelectorAll('.permission-item');
+
+                                        searchInput.addEventListener('input', function () {
+                                            const query = this.value.toLowerCase();
+
+                                            permissionItems.forEach(item => {
+                                                const label = item.querySelector('label').innerText.toLowerCase();
+                                                item.style.display = label.includes(query) ? 'flex' : 'none';
+                                            });
+                                        });
+                                    });
+                                </script>
+
                             </div>
+
+
                             <button type="submit"
                                 class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium px-5 py-2 w-40 rounded-lg shadow-md transition duration-200 ease-in-out mt-4">
                                 Submit
