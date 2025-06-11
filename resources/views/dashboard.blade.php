@@ -38,8 +38,6 @@
                     </a>
                 </div>
                 @endcan
-
-
                 <!-- Roles & Permissions Card -->
                 @can('manage roles&permission')
                 <div

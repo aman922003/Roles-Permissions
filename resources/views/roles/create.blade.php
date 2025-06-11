@@ -41,14 +41,13 @@
                                     @endforeach
                                 @endif
                             </div>
-
-
                             <button type="submit"
                                 class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium px-5 py-2 w-40 rounded-lg shadow-md transition duration-200 ease-in-out mt-4">
                                 Submit
                             </button>
                         </div>
                     </form>
+                    <script src="{{ asset('js/main.js') }}"></script>
                 </div>
             </div>
         </div>

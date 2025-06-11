@@ -83,7 +83,8 @@ class ArticleController extends Controller implements HasMiddleware
         $article = Article::findOrFail($id);
         $validator = Validator::make($request->all(), [
             'title' => 'required|min:5',
-            'auther' => 'required|min:5'
+            'text' => 'required|min:5',
+            'auther' => 'required|min:5',
         ]);
         if ($validator->passes()) {
             $article->title = $request->title;

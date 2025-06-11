@@ -34,6 +34,7 @@
                             </button>
                         </div>
                     </form>
+                    <script src="{{ asset('js/main.js') }}"></script>
                 </div>
             </div>
         </div>

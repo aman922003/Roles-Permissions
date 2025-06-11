@@ -45,4 +45,5 @@
             @endif
         </div>
     </form>
+    <script src="{{ asset('js/main.js') }}"></script>
 </section>

@@ -13,10 +13,10 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <form action="{{ route('articles.store') }}" method="post">
+                    <form id="articleForm" action="{{ route('articles.store') }}" method="post">
                         @csrf
                         <div>
-                            <label for="name" class="text-lg font-medium">Name</label>
+                            <label for="title" class="text-lg font-medium">Title</label>
                             <div class="my-3">
                                 <input id="title" name="title" placeholder="Enter Title" type="text"
                                     value="{{old('title')}}"
@@ -26,6 +26,7 @@
                                         {{ $message }}
                                     </p>
                                 @enderror
+                                <p id="titleError" class="text-red-400 font-medium hidden"></p>
                             </div>
 
                             <label for="text" class="text-lg font-medium">Content</label>
@@ -37,17 +38,20 @@
                                         {{ $message }}
                                     </p>
                                 @enderror
+                                <p id="textError" class="text-red-400 font-medium hidden"></p>
                             </div>
 
+                            <label for="auther" class="text-lg font-medium">Auther</label>
                             <div class="my-3">
                                 <input id="auther" name="auther" placeholder="Auther" type="text"
-                                    value="{{old('auther')}}"
+                                    value="{{ old('auther') }}"
                                     class="border border-gray-300 shadow-sm w-1/2 rounded-lg px-3 py-2">
                                 @error('auther')
                                     <p class="text-red-400 font-medium">
                                         {{ $message }}
                                     </p>
                                 @enderror
+                                <p id="autherError" class="text-red-400 font-medium hidden"></p>
                             </div>
                             <button type="submit"
                                 class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium px-5 py-2 w-40 rounded-lg shadow-md transition duration-200 ease-in-out mt-4">
@@ -55,9 +59,10 @@
                             </button>
                         </div>
                     </form>
+                    <!-- Include the external JS file -->
+                    <script src="{{ asset('js/main.js') }}"></script>
                 </div>
             </div>
         </div>
     </div>
-
 </x-app-layout>

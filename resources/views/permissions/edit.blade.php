@@ -22,9 +22,9 @@
                                     value="{{old('name',$permission->name)}}"
                                     class="border border-gray-300 shadow-sm w-1/2 rounded-lg px-3 py-2">
                                 @error('name')
-                                    <p class="text-red-400 font-medium">
-                                        {{ $message }}
-                                    </p>
+                                <p class="text-red-400 font-medium">
+                                    {{ $message }}
+                                </p>
                                 @enderror
 
                             </div>
@@ -34,6 +34,7 @@
                             </button>
                         </div>
                     </form>
+                    <script src="{{ asset('js/main.js') }}"></script>
                 </div>
             </div>
         </div>

@@ -85,4 +85,5 @@
             </x-primary-button>
         </div>
     </form>
+    <script src="{{ asset('js/main.js') }}"></script>
 </x-guest-layout>
