@@ -18,7 +18,6 @@ class CartController extends Controller implements HasMiddleware
             new Middleware('permission:view user cart', only: ['index']),
         ];
     }
-    
     public function index()
     {
         $cart = session()->get('cart', []);
