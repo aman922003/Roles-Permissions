@@ -93,13 +93,15 @@
                     <span id="subtotal">₹ {{ number_format($cartTotal, 2) }}</span>
                 </div>
 
-                <div class="flex justify-between items-center text-sm border-b py-2">
-                    <label for="shipping" class="text-gray-700">Shipping</label>
-                    <select id="shipping" name="shipping" class="text-sm border rounded px-3 py-1">
+                <div class="flex justify-between items-center border-b py-3">
+                    <label for="shipping" class="text-gray-800 font-medium">Shipping Method</label>
+                    <select id="shipping" name="shipping"
+                        class="border border-gray-300 rounded-lg px-4 py-2 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
                         <option value="standard">Standard – ₹50.00</option>
                         <option value="express">Express – ₹100.00</option>
                     </select>
                 </div>
+
 
                 <div>
                     <label for="promo" class="text-sm font-medium block mb-1 text-gray-700">Promo Code</label>
@@ -117,10 +119,11 @@
                     <span id="cart-total">₹ {{ number_format($cartTotal + 50, 2) }}</span>
                 </div>
 
-                <button
-                    class="w-full bg-green-600 hover:bg-green-700 text-white py-3 text-sm font-semibold rounded shadow transition">
+                <a href="{{ route('users.checkout') }}"
+                    class="block w-full bg-green-600 hover:bg-green-700 text-white text-center py-3 text-sm font-semibold rounded shadow transition">
                     Proceed to Checkout
-                </button>
+                </a>
+
             </div>
         </div>
         @else

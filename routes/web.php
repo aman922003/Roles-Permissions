@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\User\CheckoutController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProfileController;
@@ -57,20 +59,14 @@ require __DIR__ . '/auth.php';
 */
 Route::prefix('admin')
     ->name('admin.')
-    // ->middleware(['auth', 'can:access-admin'])
     ->group(function () {
-
         // Products
         Route::resource('products', ProductController::class);
-
         // Categories
         Route::resource('categories', CategoryController::class);
-        // Route::get('categories', [CategoryController::class, 'index'])->name('categories.index');
-        // Route::get('categories/create', [CategoryController::class, 'create'])->name('categories.create');
-        // Route::post('categories', [CategoryController::class, 'store'])->name('categories.store');
-        // Route::get('categories/{category}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
-        // Route::put('categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
-        // Route::delete('categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+         // Orders
+         Route::get('/orders', [OrderController::class, 'index'])->name('orders');
+
     });
 
     Route::middleware(['auth'])->name('users.')->group(function () {
@@ -89,9 +85,7 @@ Route::prefix('admin')
         Route::delete('/cart/{id}', [CartController::class, 'remove'])->name('cart.remove');
     
         // Checkout
-        // Route::get('/checkout', [UserCheckoutController::class, 'show'])->name('checkout');
-        // Route::post('/checkout', [UserCheckoutController::class, 'placeOrder'])->name('placeOrder');
+        Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
+        Route::post('/checkout', [CheckoutController::class, 'placeOrder'])->name('placeOrder');
     
-        // Orders
-        // Route::get('/orders', [UserOrderController::class, 'index'])->name('orders');
     });

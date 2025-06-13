@@ -10,11 +10,17 @@ use Illuminate\Support\Facades\Auth;
 
 class CheckoutController extends Controller
 {
-    public function show()
+    public function index()
     {
         $cart = session()->get('cart', []);
-        return view('user.checkout.index', compact('cart'));
+    
+        $subtotal = collect($cart)->sum(fn($item) => $item['price'] * $item['quantity']);
+        $tax = $subtotal * 0.18;
+        $total = $subtotal + $tax;
+    
+        return view('users.checkout.index', compact('cart', 'subtotal', 'tax', 'total'));
     }
+    
 
     public function placeOrder(Request $request)
     {
@@ -27,9 +33,11 @@ class CheckoutController extends Controller
         $order = Order::create([
             'user_id' => Auth::id(),
             'status' => 'pending',
-            'address' => $request->address,
-            'city' => $request->city,
-            'postal_code' => $request->postal_code,
+            'subtotal' => $request->subtotal,
+            'tax' => $request->text,
+            'shipping_method' => $request->shipping_method,
+            'payment_method' => $request->payment_method,
+            'total' => $request->total
         ]);
 
         foreach (session()->get('cart', []) as $productId => $details) {
