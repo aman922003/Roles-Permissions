@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 
@@ -13,15 +14,18 @@ class DashboardController extends Controller implements HasMiddleware
     public static function middleware()
     {
         return [
-            new Middleware('permission:manage user|manage roles&permission', only: ['index']),
+            new Middleware('permission:manage user|manage roles&permission |view product list', only: ['index']),
         ];
     }
 
      /**
      * Redirect to dashboard blade file.
      */
-    public function index()
+    public function index() 
     {
-        return view('dashboard');
+        $products = Product::all();
+        return view('dashboard',[
+            'products'=> $products,
+        ]);
     }
 }

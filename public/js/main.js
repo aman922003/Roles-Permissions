@@ -711,3 +711,74 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+
+// Product Image Upload while create Update product script
+function previewImage(event) {
+    const input = event.target;
+    const preview = document.getElementById('imagePreview');
+
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+            preview.classList.remove('hidden');
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+//this for quick change while update image
+document.addEventListener('DOMContentLoaded', function () {
+    const imageInput = document.getElementById('image-input');
+    const preview = document.getElementById('image-preview');
+    const removeBtn = document.getElementById('remove-image');
+
+    // Show image preview
+    imageInput.addEventListener('change', function (event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = e => {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+                if (removeBtn) removeBtn.style.display = 'inline-block';
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // Remove current preview (quick delete from preview only, not DB)
+    if (removeBtn) {
+        removeBtn.addEventListener('click', function () {
+            preview.src = '';
+            preview.style.display = 'none';
+            imageInput.value = '';
+            removeBtn.style.display = 'none';
+        });
+    }
+});
+
+//Category image Uploadation js
+    const imageInput = document.getElementById('image');
+    const previewContainer = document.createElement('div');
+    previewContainer.classList.add('mt-2');
+
+    imageInput.insertAdjacentElement('afterend', previewContainer);
+
+    imageInput.addEventListener('change', function (e) {
+        const file = e.target.files[0];
+        previewContainer.innerHTML = ''; // Clear previous preview
+
+        if (file && file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.classList.add('mt-2', 'max-w-xs', 'rounded');
+                previewContainer.appendChild(img);
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+

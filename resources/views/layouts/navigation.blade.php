@@ -48,6 +48,49 @@
                     </x-nav-link>
                 </div>
                 @endcan
+
+                @can('view categories')
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('admin.categories.index')" :active="request()->routeIs('dashboard')">
+                        {{ __('Categories') }}
+                    </x-nav-link>
+                </div>
+                @endcan
+
+                @can('view products')
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('admin.products.index')" :active="request()->routeIs('dashboard')">
+                        {{ __('Products') }}
+                    </x-nav-link>
+                </div>
+                @endcan
+
+                @php
+    $cart = session('cart', []);
+    $cartCount = collect($cart)->sum('quantity');
+@endphp
+
+<div class="relative sm:ms-8 flex items-center">
+    <a href="{{ route('users.cart') }}" class="relative text-gray-700 hover:text-gray-900 transition duration-200">
+
+        {{-- Small Cart Count Badge --}}
+        @if ($cartCount > 0)
+            <span class="absolute -top-1.5 -right-1.5 w-5 h-5 text-xs font-semibold text-white bg-red-600 rounded-full flex items-center justify-center shadow">
+                {{ $cartCount }}
+            </span>
+        @endif
+
+        {{-- Sleek Cart Icon --}}
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.5 6h13.1M7 13l-4-8m2.4-2h15.2" />
+        </svg>
+    </a>
+</div>
+
+                
+
+
             </div>
 
             <!-- Settings Dropdown -->
@@ -57,7 +100,6 @@
                         <button
                             class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                             <div>{{ Auth::user()->name }}</div>
-
                             <div class="ms-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 20 20">

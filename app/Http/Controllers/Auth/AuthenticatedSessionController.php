@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use App\Models\Cart;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -27,7 +28,12 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-
+         // Restore cart from database if available
+        $user = auth()->user();
+        $savedCart = Cart::where('user_id', $user->id)->first();
+        if ($savedCart) {
+            session(['cart' => $savedCart->cart_data]);
+         }
         return redirect()->intended(route('dashboard', absolute: false));
     }
 
@@ -36,9 +42,23 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
+        if (auth()->check()) {
+            $user = auth()->user();
+            $cart = session('cart', []);
+            if (!empty($cart)) {
+                Cart::updateOrCreate(
+                    ['user_id' => $user->id],
+                    ['cart_data' => $cart]
+                );
+            }
+        }
+
         Auth::guard('web')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect('/login');
     }
+
+
+    
 }
