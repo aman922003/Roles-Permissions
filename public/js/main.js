@@ -728,6 +728,64 @@ function previewImage(event) {
     }
 }
 
+// Quantity increase and decrease and update its cartTotal according
+document.addEventListener("DOMContentLoaded", function() {
+    
+    document.querySelectorAll(".increase").forEach(btn => {
+        btn.addEventListener("click", function() {
+            const id = this.dataset.id;
+            const input = document.querySelector(`.quantity[data-id="${id}"]`);
+            const price = document.querySelector(`.item-price[data-id="${id}"]`);
+            const total = document.querySelector(`.item-total[data-id="${id}"]`);
+
+            let qty = parseInt(input.value);
+            if (!isNaN(qty)) {
+                qty++;
+                input.value = qty;
+                total.textContent = `₹ ${(qty * parseFloat(price.value)).toFixed(2)}`;
+                updateCartTotal();
+            }
+        });
+    });
+
+    document.querySelectorAll(".decrease").forEach(btn => {
+        btn.addEventListener("click", function() {
+            const id = this.dataset.id;
+            const input = document.querySelector(`.quantity[data-id="${id}"]`);
+            const price = document.querySelector(`.item-price[data-id="${id}"]`);
+            const total = document.querySelector(`.item-total[data-id="${id}"]`);
+
+            let qty = parseInt(input.value);
+            if (!isNaN(qty) && qty > 1) {
+                qty--;
+                input.value = qty;
+                total.textContent = `₹ ${(qty * parseFloat(price.value)).toFixed(2)}`;
+                updateCartTotal();
+            }
+        });
+    });
+
+    function updateCartTotal() {
+        let subtotal = 0;
+
+        document.querySelectorAll(".quantity").forEach(input => {
+            const id = input.dataset.id;
+            const price = document.querySelector(`.item-price[data-id="${id}"]`);
+            subtotal += parseInt(input.value) * parseFloat(price.value);
+        });
+
+        const shipping = document.getElementById("shipping").value;
+        const shippingFee = shipping === "express" ? 100 : 50;
+        document.getElementById("subtotal").textContent = `₹ ${subtotal.toFixed(2)}`;
+        document.getElementById("cart-total").textContent = `₹ ${(subtotal + shippingFee).toFixed(2)}`;
+    }
+
+    const shippingSelect = document.getElementById("shipping");
+    if (shippingSelect) {
+        shippingSelect.addEventListener("change", updateCartTotal);
+    }
+});
+
 //this for quick change while update image
 document.addEventListener('DOMContentLoaded', function () {
     const imageInput = document.getElementById('image-input');

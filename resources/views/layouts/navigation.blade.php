@@ -65,30 +65,34 @@
                 </div>
                 @endcan
 
+                @can('view user cart')
                 @php
-    $cart = session('cart', []);
-    $cartCount = collect($cart)->sum('quantity');
-@endphp
+                $cart = session('cart', []);
+                $cartCount = collect($cart)->sum('quantity');
+                @endphp
 
-<div class="relative sm:ms-8 flex items-center">
-    <a href="{{ route('users.cart') }}" class="relative text-gray-700 hover:text-gray-900 transition duration-200">
+                <div class="relative sm:ms-8 flex items-center">
+                    <a href="{{ route('users.cart') }}"
+                        class="relative text-gray-700 hover:text-gray-900 transition duration-200">
 
-        {{-- Small Cart Count Badge --}}
-        @if ($cartCount > 0)
-            <span class="absolute -top-1.5 -right-1.5 w-5 h-5 text-xs font-semibold text-white bg-red-600 rounded-full flex items-center justify-center shadow">
-                {{ $cartCount }}
-            </span>
-        @endif
+                        {{-- Small Cart Count Badge --}}
+                        @if ($cartCount > 0)
+                        <span
+                            class="absolute -top-1.5 -right-1.5 w-5 h-5 text-xs font-semibold text-white bg-red-600 rounded-full flex items-center justify-center shadow">
+                            {{ $cartCount }}
+                        </span>
+                        @endif
 
-        {{-- Sleek Cart Icon --}}
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round"
-                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.5 6h13.1M7 13l-4-8m2.4-2h15.2" />
-        </svg>
-    </a>
-</div>
+                        {{-- Sleek Cart Icon --}}
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.5 6h13.1M7 13l-4-8m2.4-2h15.2" />
+                        </svg>
+                    </a>
+                </div>
+                @endcan
 
-                
 
 
             </div>

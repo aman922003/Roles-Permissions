@@ -5,9 +5,9 @@
 
     <div class="p-6 bg-gray-100 min-h-screen">
         @php
-            $cart = session('cart', []);
-            $cartCount = collect($cart)->sum('quantity');
-            $cartTotal = collect($cart)->sum(fn($item) => $item['price'] * $item['quantity']);
+        $cart = session('cart', []);
+        $cartCount = collect($cart)->sum('quantity');
+        $cartTotal = collect($cart)->sum(fn($item) => $item['price'] * $item['quantity']);
         @endphp
 
         @if(count($cart) > 0)
@@ -28,7 +28,8 @@
                             <img src="{{ asset('storage/' . $item['image']) }}" alt="Product Image"
                                 class="w-20 h-20 object-cover rounded border">
                             @else
-                            <div class="w-20 h-20 bg-gray-100 flex items-center justify-center border rounded text-gray-400">
+                            <div
+                                class="w-20 h-20 bg-gray-100 flex items-center justify-center border rounded text-gray-400">
                                 No Image
                             </div>
                             @endif
@@ -47,7 +48,7 @@
                             </div>
                         </div>
 
-                        <!-- Quantity -->
+                        <!-- Quantity Section -->
                         <div class="col-span-6 md:col-span-3 flex items-center justify-center gap-3">
                             <button type="button"
                                 class="decrease bg-gray-200 hover:bg-gray-300 w-8 h-8 rounded text-lg font-bold transition"
@@ -60,13 +61,17 @@
                             <button type="button"
                                 class="increase bg-gray-200 hover:bg-gray-300 w-8 h-8 rounded text-lg font-bold transition"
                                 data-id="{{ $id }}">+</button>
+
+                            <!-- Hidden price for JS -->
+                            <input type="hidden" class="item-price" data-id="{{ $id }}" value="{{ $item['price'] }}">
                         </div>
 
-                        <!-- Total Price -->
+                        <!-- Per Product Total -->
                         <div class="col-span-6 md:col-span-3 text-right font-semibold text-gray-800 item-total"
                             data-id="{{ $id }}">
                             ₹ {{ number_format($item['price'] * $item['quantity'], 2) }}
                         </div>
+
                     </div>
                     @endforeach
                 </div>
@@ -124,9 +129,10 @@
             <img src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png" alt="Empty Cart"
                 class="w-24 h-24 opacity-60">
             <p class="text-gray-600 text-lg">Your cart is empty.</p>
-            <a href="{{ route('dashboard') }}"
-                class="inline-block mt-2 text-green-600 hover:underline text-sm">← Continue Shopping</a>
+            <a href="{{ route('dashboard') }}" class="inline-block mt-2 text-green-600 hover:underline text-sm">←
+                Continue Shopping</a>
         </div>
         @endif
     </div>
+    <script src="{{ asset('js/main.js') }}"></script>
 </x-app-layout>

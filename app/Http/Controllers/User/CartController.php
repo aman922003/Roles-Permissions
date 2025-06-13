@@ -6,9 +6,19 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class CartController extends Controller
+class CartController extends Controller implements HasMiddleware
 {
+
+    public static function middleware()
+    {
+        return [
+            new Middleware('permission:view user cart', only: ['index']),
+        ];
+    }
+    
     public function index()
     {
         $cart = session()->get('cart', []);
