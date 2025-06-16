@@ -9,7 +9,7 @@ class ShippingDetail extends Model
     use HasFactory;
 
     protected $fillable = [
-        'order_id', 'address', 'city', 'state', 'zipcode', 'country'
+        'user_id', 'order_id' , 'address', 'region', 'city', 'phone', 'country', 'zip'
     ];
 
     public function order()

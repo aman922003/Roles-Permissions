@@ -13,15 +13,21 @@ return new class extends Migration
     {
         Schema::create('shipping_details', function (Blueprint $table) {
             $table->id();
+            
+            // Foreign keys
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('order_id')->constrained()->onDelete('cascade');
-            $table->string('address');
+            
+            // Shipping information
+            $table->text('address');
+            $table->string('region');
             $table->string('city');
-            $table->string('state');
-            $table->string('zipcode');
+            $table->string('phone');
             $table->string('country');
+            $table->string('zip');
+
             $table->timestamps();
         });
-        
     }
 
     /**

@@ -24,7 +24,7 @@
                 <td>₹
                     {{ $ord->total }}
                 </td>
-                <td><a href="#">View</a></td>
+                <td><a href="{{ route('admin.orders.show', $ord) }}">View</a></td>
             </tr>
         @endforeach
     </tbody>

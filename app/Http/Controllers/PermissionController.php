@@ -9,20 +9,20 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 
 
-class PermissionController extends Controller implements HasMiddleware
+class PermissionController extends Controller //implements HasMiddleware
 {
      /**
      * Assign Permissions using Middleware.
      */
-    public static function middleware()
-    {
-        return [
-            new Middleware('permission:view permissions', only: ['index']),
-            new Middleware('permission:edit permissions', only: ['edit']),
-            new Middleware('permission:create permissions', only: ['create']),
-            new Middleware('permission:delete permissions', only: ['destroy']),
-        ];
-    }
+    // public static function middleware()
+    // {
+    //     return [
+    //         new Middleware('permission:view permissions', only: ['index']),
+    //         new Middleware('permission:edit permissions', only: ['edit']),
+    //         new Middleware('permission:create permissions', only: ['create']),
+    //         new Middleware('permission:delete permissions', only: ['destroy']),
+    //     ];
+    // }
 
     //This method will shows permissions page
     public function index()

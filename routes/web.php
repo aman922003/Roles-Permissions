@@ -65,7 +65,9 @@ Route::prefix('admin')
         // Categories
         Route::resource('categories', CategoryController::class);
          // Orders
+
          Route::get('/orders', [OrderController::class, 'index'])->name('orders');
+         Route::get('orders/{order}', [OrderController::class, 'show'])->name('orders.show');
 
     });
 
@@ -86,6 +88,6 @@ Route::prefix('admin')
     
         // Checkout
         Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
-        Route::post('/checkout', [CheckoutController::class, 'placeOrder'])->name('placeOrder');
+        Route::post('/checkout', [CheckoutController::class, 'placeOrder'])->name('placeorder');
     
     });

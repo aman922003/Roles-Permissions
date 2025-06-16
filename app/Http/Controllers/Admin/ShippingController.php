@@ -11,12 +11,13 @@ class ShippingController extends Controller
     public function updateDetails(Request $request, ShippingDetail $shippingDetail)
     {
         $data = $request->validate([
-            'address' => 'string|required',
-            'city'    => 'string|required',
-            'state'   => 'string|required',
-            'zipcode' => 'string|required',
-            'country' => 'string|required',
-        ]);
+            'address' => ['required', 'string', 'min:5', 'max:255'],
+            'region'  => ['required', 'string', 'min:2', 'max:100'],
+            'city'    => ['required', 'string', 'min:2', 'max:100'],
+            'phone'   => ['required', 'string', 'regex:/^\+?[0-9]{10,15}$/'],
+            'zipcode' => ['required', 'string', 'min:4', 'max:10'],
+            'country' => ['required', 'string', 'min:2', 'max:100'],
+        ]);        
 
         $shippingDetail->update($data);
         return back()->with('success', 'Shipping details updated.');

@@ -9,19 +9,19 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 
-class CartController extends Controller implements HasMiddleware
+class CartController extends Controller //implements HasMiddleware
 {
 
-    public static function middleware()
-    {
-        return [
-            new Middleware('permission:view user cart', only: ['index']),
-        ];
-    }
+    // public static function middleware()
+    // {
+    //     return [
+    //         new Middleware('permission:view user cart', only: ['index']),
+    //     ];
+    // }
     public function index()
     {
         $cart = session()->get('cart', []);
-        return view('cart.index', compact('cart'));
+        return view('users.cart.index', compact('cart'));
     }
 
 
