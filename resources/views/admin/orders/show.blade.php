@@ -2,7 +2,7 @@
 <p><strong>User:</strong> {{ $order->user->name }}</p>
 <p><strong>Status:</strong> {{ $order->status }}</p>
 
-<form action="#" method="POST">
+<form action="{{ route('admin.orders.updateStatus', $order) }}" method="POST">
     @csrf @method('PUT')
     <select name="status">
         @foreach(['pending','processing','shipped','delivered','canceled'] as $st)
@@ -20,7 +20,7 @@
 </ul>
 
 <h2 class="mt-4">Shipping Details</h2>
-<form action="#" method="POST">
+<form action="{{ route('admin.shipping.update', $order->shipping) }}" method="POST">
     @csrf @method('PUT')
     @foreach(['address','city','zip','country'] as $field)
     <div>

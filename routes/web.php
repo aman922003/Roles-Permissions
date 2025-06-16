@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\ShippingController;
 use App\Http\Controllers\User\CheckoutController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\PermissionController;
@@ -68,6 +69,12 @@ Route::prefix('admin')
 
          Route::get('/orders', [OrderController::class, 'index'])->name('orders');
          Route::get('orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+
+          // Update Order Status
+        Route::put('orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
+
+        // Shipping Details
+        Route::put('shipping/{shippingDetail}', [ShippingController::class, 'updateDetails'])->name('shipping.update');
 
     });
 
