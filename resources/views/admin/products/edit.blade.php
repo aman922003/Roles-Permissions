@@ -5,7 +5,7 @@
                 Products / Edit
             </h2>
             <a href="{{ route('admin.products.index') }}"
-               class="bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium px-5 py-2 rounded-lg shadow-md transition duration-200">
+                class="bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium px-5 py-2 rounded-lg shadow-md transition duration-200">
                 Back
             </a>
         </div>
@@ -14,53 +14,55 @@
     <div class="py-12">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white shadow-sm sm:rounded-lg p-6">
-                <form action="{{ route('admin.products.update', $product) }}" method="POST" enctype="multipart/form-data">
+                <form id="productEditForm" action="{{ route('admin.products.update', $product) }}" method="POST"
+                    enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
                     {{-- Name --}}
                     <div class="mb-4">
                         <label class="block text-gray-700 font-medium mb-1">Name</label>
-                        <input type="text" name="name" value="{{ old('name', $product->name) }}" required
-                               class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                        <input type="text" name="name" value="{{ old('name', $product->name) }}"
+                            class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
                         @error('name')
-                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                        <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                         @enderror
                     </div>
 
                     {{-- Description --}}
                     <div class="mb-4">
                         <label class="block text-gray-700 font-medium mb-1">Description</label>
-                        <textarea name="description" rows="4" required
-                                  class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">{{ old('description', $product->description) }}</textarea>
+                        <textarea name="description" rows="4"
+                            class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">{{ old('description', $product->description) }}</textarea>
                         @error('description')
-                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                        <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                         @enderror
                     </div>
 
                     {{-- Category --}}
                     <div class="mb-4">
                         <label class="block text-gray-700 font-medium mb-1">Category</label>
-                        <select name="category_id" required
-                                class="w-full border border-gray-300 rounded-md px-4 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-400">
+                        <select name="category_id"
+                            class="w-full border border-gray-300 rounded-md px-4 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-400">
                             @foreach($categories as $cat)
-                                <option value="{{ $cat->id }}" @selected(old('category_id', $product->category_id) == $cat->id)>
-                                    {{ $cat->name }}
-                                </option>
+                            <option value="{{ $cat->id }}" @selected(old('category_id', $product->category_id) ==
+                                $cat->id)>
+                                {{ $cat->name }}
+                            </option>
                             @endforeach
                         </select>
                         @error('category_id')
-                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                        <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                         @enderror
                     </div>
 
                     {{-- Price --}}
                     <div class="mb-4">
                         <label class="block text-gray-700 font-medium mb-1">Price</label>
-                        <input type="number" name="price" step="0.01" value="{{ old('price', $product->price) }}" required
-                               class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                        <input type="number" name="price" step="0.01" value="{{ old('price', $product->price) }}"
+                            class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
                         @error('price')
-                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                        <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                         @enderror
                     </div>
 
@@ -68,18 +70,18 @@
                     <div class="mb-6">
                         <label class="block text-gray-700 font-medium mb-1">Image</label>
                         <input type="file" name="image" id="image-input" accept="image/*"
-                               class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none">
+                            class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none">
                         @error('image')
-                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                        <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                         @enderror
 
                         <div class="mt-4">
                             @if ($product->image)
-                                <img id="image-preview" src="{{ asset('storage/' . $product->image) }}" alt="Product Image"
-                                     class="rounded-md w-48 h-48 object-cover border border-gray-300">
+                            <img id="image-preview" src="{{ asset('storage/' . $product->image) }}" alt="Product Image"
+                                class="rounded-md w-48 h-48 object-cover border border-gray-300">
                             @else
-                                <img id="image-preview" src="#" alt="Selected Image"
-                                     class="hidden rounded-md w-48 h-48 object-cover border border-gray-300" />
+                            <img id="image-preview" src="#" alt="Selected Image"
+                                class="hidden rounded-md w-48 h-48 object-cover border border-gray-300" />
                             @endif
                         </div>
                     </div>
@@ -87,7 +89,7 @@
                     {{-- Submit --}}
                     <div>
                         <button type="submit"
-                                class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2 rounded-md shadow-md transition duration-200">
+                            class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2 rounded-md shadow-md transition duration-200">
                             Update Product
                         </button>
                     </div>
@@ -96,6 +98,110 @@
         </div>
     </div>
 
-    {{-- JS for image preview --}}
-    <script src="{{ asset('js/main.js') }}"></script>
+    {{-- JS validation --}}
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.querySelector('#productEditForm');
+
+        const name = form.querySelector('input[name="name"]');
+        const description = form.querySelector('textarea[name="description"]');
+        const category = form.querySelector('select[name="category_id"]');
+        const price = form.querySelector('input[name="price"]');
+        const image = document.getElementById('image-input');
+        const imagePreview = document.getElementById('image-preview');
+
+        const createOrGetError = (input) => {
+            let error = input.nextElementSibling;
+            if (!error || !error.classList.contains('text-red-600')) {
+                error = document.createElement('div');
+                error.className = 'text-red-600 text-sm mt-1';
+                input.parentNode.appendChild(error);
+            }
+            return error;
+        };
+
+        const showError = (input, message) => {
+            const error = createOrGetError(input);
+            error.textContent = message;
+            input.classList.add('border-red-500');
+        };
+
+        const clearError = (input) => {
+            const error = input.nextElementSibling;
+            if (error && error.classList.contains('text-red-600')) {
+                error.textContent = '';
+            }
+            input.classList.remove('border-red-500');
+        };
+
+        const validateName = () => {
+            clearError(name);
+            const val = name.value.trim();
+            if (!val) return showError(name, 'Name is required.'), false;
+            if (val.length < 3) return showError(name, 'Name must be at least 3 characters.'), false;
+            return true;
+        };
+
+        const validateDescription = () => {
+            clearError(description);
+            const val = description.value.trim();
+            if (!val) return showError(description, 'Description is required.'), false;
+            if (val.length < 10) return showError(description, 'Minimum 10 characters required.'), false;
+            return true;
+        };
+
+        const validateCategory = () => {
+            clearError(category);
+            if (!category.value) return showError(category, 'Category is required.'), false;
+            return true;
+        };
+
+        const validatePrice = () => {
+            clearError(price);
+            const val = parseFloat(price.value);
+            if (isNaN(val) || val <= 0) return showError(price, 'Enter a valid price greater than 0.'),
+                false;
+            return true;
+        };
+
+        const validateImage = () => {
+            clearError(image);
+            const file = image.files[0];
+            if (!file) return true;
+            const allowed = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+            if (!allowed.includes(file.type)) return showError(image, 'Invalid image format.'), false;
+            if (file.size > 2 * 1024 * 1024) return showError(image, 'Image must be less than 2MB.'), false;
+            return true;
+        };
+
+        const previewImage = (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                imagePreview.src = URL.createObjectURL(file);
+                imagePreview.classList.remove('hidden');
+            } else {
+                imagePreview.src = '#';
+                imagePreview.classList.add('hidden');
+            }
+        };
+
+        // Attach real-time listeners
+        name.addEventListener('input', validateName);
+        description.addEventListener('input', validateDescription);
+        category.addEventListener('change', validateCategory);
+        price.addEventListener('input', validatePrice);
+        image.addEventListener('change', (e) => {
+            validateImage();
+            previewImage(e);
+        });
+
+        form.addEventListener('submit', (e) => {
+            if (![validateName(), validateDescription(), validateCategory(), validatePrice(),
+                    validateImage()
+                ].every(Boolean)) {
+                e.preventDefault();
+            }
+        });
+    });
+    </script>
 </x-app-layout>

@@ -14,13 +14,13 @@
     <div class="py-12">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white shadow-sm sm:rounded-lg p-6">
-                <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
+                <form id="productForm" action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     {{-- Name --}}
                     <div class="mb-4">
                         <label class="block text-gray-700 font-medium mb-1">Name</label>
-                        <input type="text" name="name" value="{{ old('name') }}" required
+                        <input type="text" id="name" name="name" value="{{ old('name') }}" 
                                class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
                         @error('name')
                             <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -30,7 +30,7 @@
                     {{-- Description --}}
                     <div class="mb-4">
                         <label class="block text-gray-700 font-medium mb-1">Description</label>
-                        <textarea name="description" rows="4" required
+                        <textarea id="description" name="description" rows="4" 
                                   class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">{{ old('description') }}</textarea>
                         @error('description')
                             <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -40,7 +40,7 @@
                     {{-- Category --}}
                     <div class="mb-4">
                         <label class="block text-gray-700 font-medium mb-1">Category</label>
-                        <select name="category_id" required
+                        <select name="category_id" id="category_id"
                                 class="w-full border border-gray-300 rounded-md px-4 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-400">
                             @foreach($categories as $cat)
                                 <option value="{{ $cat->id }}" @selected(old('category_id') == $cat->id)>
@@ -56,7 +56,7 @@
                     {{-- Price --}}
                     <div class="mb-4">
                         <label class="block text-gray-700 font-medium mb-1">Price</label>
-                        <input type="number" name="price" step="0.01" value="{{ old('price') }}" required
+                        <input type="number" name="price" id="price" step="0.01" value="{{ old('price') }}" 
                                class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
                         @error('price')
                             <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -66,7 +66,7 @@
                     {{-- Image --}}
                     <div class="mb-6">
                         <label class="block text-gray-700 font-medium mb-1">Image</label>
-                        <input type="file" name="image" accept="image/*" onchange="previewImage(event)"
+                        <input type="file" name="image" id="image" accept="image/*"
                                class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none">
                         @error('image')
                             <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -90,7 +90,6 @@
         </div>
     </div>
 
-    {{-- JS for preview --}}
-    <script src="{{ asset('js/main.js') }}"></script>
-        </script>
+    {{-- JS for preview + validation --}}
+    <script src="{{ asset('js/ecommerce-validation.js') }}"></script>
 </x-app-layout>
