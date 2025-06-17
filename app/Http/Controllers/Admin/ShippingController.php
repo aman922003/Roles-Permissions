@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 class ShippingController extends Controller
 {
+    //Shipping update details
     public function updateDetails(Request $request, ShippingDetail $shippingDetail)
     {
         $data = $request->validate([

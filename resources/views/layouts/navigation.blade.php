@@ -79,7 +79,15 @@
                         {{ __('Categories') }}
                     </x-nav-link>
                 </div>
-                @endcan                
+                @endcan    
+                
+                @can('view userorders')
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('users.orders.index')" :active="request()->routeIs('dashboard')">
+                        {{ __('Orders') }}
+                    </x-nav-link>
+                </div>
+                @endcan
 
                 @can('view user cart')
                 @php

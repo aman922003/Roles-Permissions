@@ -9,12 +9,14 @@ use App\Models\Product;
 class UserProductController extends Controller
 {
 
+    //show user product index file
     public function index()
     {
         $products = Product::latest()->paginate(10);
         return view('user.products.index', compact('products'));
     }
 
+    //show by category products
     public function showByCategory($id)
     {
         $category = Category::findOrFail($id);

@@ -12,19 +12,22 @@ use Illuminate\Routing\Controllers\Middleware;
 class CartController extends Controller implements HasMiddleware
 {
 
+    //Middleware for roles and permissions
     public static function middleware()
     {
         return [
             new Middleware('permission:view user cart', only: ['index']),
         ];
     }
+
+    //show cart index blade file
     public function index()
     {
         $cart = session()->get('cart', []);
         return view('users.cart.index', compact('cart'));
     }
 
-
+    //add to cart user products
     public function add(Request $request, $id)
     {
         $product = Product::findOrFail($id);
@@ -47,7 +50,7 @@ class CartController extends Controller implements HasMiddleware
         return redirect()->route('users.cart')->with('success', 'Product added to cart!');
     }
 
-
+    //remove fro the cart user products
     public function remove($id)
     {
         $cart = session()->get('cart', []);

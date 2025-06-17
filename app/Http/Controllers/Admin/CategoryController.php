@@ -9,17 +9,20 @@ use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
+    //admin category index file show with category data
     public function index(Request $request)
     {
         $categories = Category::all();
         return view('admin.categories.index', compact('categories'));
     }
 
+    //create admin categories
     public function create()
     {
         return view('admin.categories.create');
     }
 
+    //save categories in database
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -37,12 +40,13 @@ class CategoryController extends Controller
             ->with('success', 'Category created.');
     }
 
+    //edit admin categories
     public function edit(Category $category)
     {
         return view('admin.categories.edit', compact('category'));
     }    
     
-
+    //update admin categories with backend validations
     public function update(Request $request, Category $category)
     {
         $validated = $request->validate([
@@ -63,6 +67,7 @@ class CategoryController extends Controller
             ->with('success', 'Category updated.'); 
     }
 
+    //destroy admin categories
     public function destroy(Category $category)
     {
         if ($category->image && Storage::disk('public')->exists($category->image)) {

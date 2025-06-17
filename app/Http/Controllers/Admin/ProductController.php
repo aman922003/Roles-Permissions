@@ -10,18 +10,21 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
+    //product index show 
     public function index()
     {
-        $products = Product::with('category')->get();
+        $products = Product::with('category')->paginate(10);
         return view('admin.products.index', compact('products'));
     }
 
+    //create products
     public function create()
     {
         $categories = Category::all();
         return view('admin.products.create', compact('categories'));
     }
 
+    //store products in databse
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -42,15 +45,14 @@ class ProductController extends Controller
             ->with('success', 'Product created successfully.');
     }
 
-
-
+    //edit admin products
     public function edit(Product $product)
     {
         $categories = Category::all();
         return view('admin.products.edit', compact('product', 'categories'));
     }
 
-
+    //upadate admin products
     public function update(Request $request, Product $product)
     {
         $validated = $request->validate([
@@ -75,8 +77,7 @@ class ProductController extends Controller
             ->with('success', 'Product updated successfully.');
     }
 
-
-
+    //admin destroy products
     public function destroy(Product $product)
     {
         if ($product->image) {
