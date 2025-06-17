@@ -17,6 +17,12 @@
 
     <div class="py-12 bg-gray-100 min-h-screen">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            @if (session('success'))
+            <div class="mb-4 px-4 py-3 bg-green-100 border border-green-400 text-green-700 rounded">
+                {{ session('success') }}
+            </div>
+            @endif
+
             <!-- Management Cards -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <!-- User Management Card -->
@@ -107,7 +113,7 @@
                             </div>
                             <button type="submit"
                                 class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition duration-200">
-                                Add to Cart 
+                                Add to Cart
                             </button>
                         </form>
 

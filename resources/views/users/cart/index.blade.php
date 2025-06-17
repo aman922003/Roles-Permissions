@@ -106,7 +106,7 @@
 
                 <div class="flex justify-between font-semibold text-base border-t pt-3">
                     <span>Total</span>
-                    <span id="cart-total">₹ {{ number_format($cartTotal + 50, 2) }}</span>
+                    <span id="cart-total">₹ {{ number_format($cartTotal, 2) }}</span>
                 </div>
 
                 <a href="{{ route('users.checkout') }}"

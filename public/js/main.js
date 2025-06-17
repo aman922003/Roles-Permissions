@@ -728,11 +728,10 @@ function previewImage(event) {
     }
 }
 
-// Quantity increase and decrease and update its cartTotal according
-document.addEventListener("DOMContentLoaded", function() {
-    
+document.addEventListener("DOMContentLoaded", function () {
+
     document.querySelectorAll(".increase").forEach(btn => {
-        btn.addEventListener("click", function() {
+        btn.addEventListener("click", function () {
             const id = this.dataset.id;
             const input = document.querySelector(`.quantity[data-id="${id}"]`);
             const price = document.querySelector(`.item-price[data-id="${id}"]`);
@@ -749,7 +748,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     document.querySelectorAll(".decrease").forEach(btn => {
-        btn.addEventListener("click", function() {
+        btn.addEventListener("click", function () {
             const id = this.dataset.id;
             const input = document.querySelector(`.quantity[data-id="${id}"]`);
             const price = document.querySelector(`.item-price[data-id="${id}"]`);
@@ -773,16 +772,8 @@ document.addEventListener("DOMContentLoaded", function() {
             const price = document.querySelector(`.item-price[data-id="${id}"]`);
             subtotal += parseInt(input.value) * parseFloat(price.value);
         });
-
-        const shipping = document.getElementById("shipping").value;
-        const shippingFee = shipping === "express" ? 100 : 50;
         document.getElementById("subtotal").textContent = `₹ ${subtotal.toFixed(2)}`;
-        document.getElementById("cart-total").textContent = `₹ ${(subtotal + shippingFee).toFixed(2)}`;
-    }
-
-    const shippingSelect = document.getElementById("shipping");
-    if (shippingSelect) {
-        shippingSelect.addEventListener("change", updateCartTotal);
+        document.getElementById("cart-total").textContent = `₹ ${(subtotal).toFixed(2)}`;
     }
 });
 
@@ -840,3 +831,5 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+
+// Ecommerce validations

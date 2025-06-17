@@ -5,6 +5,8 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ShippingController;
 use App\Http\Controllers\User\CheckoutController;
+use App\Http\Controllers\User\UserCategoryController;
+use App\Http\Controllers\User\UserProductController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProfileController;
@@ -72,22 +74,24 @@ Route::prefix('admin')
 
           // Update Order Status
         Route::put('orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
+        Route::delete('/admin/orders/{id}', [OrderController::class, 'destroy'])->name('orders.delete');
 
         // Shipping Details
         Route::put('shipping/{shippingDetail}', [ShippingController::class, 'updateDetails'])->name('shipping.update');
+
 
     });
 
     Route::middleware(['auth'])->name('users.')->group(function () {
 
-        // Categories
-        // Route::get('/categories', [UserCategoryController::class, 'index'])->name('categories.index');
-        // Route::get('/categories/{id}', [UserCategoryController::class, 'show'])->name('categories.show');
-    
-        // Products
-        // Route::get('/products', [UserProductController::class, 'index'])->name('products.index');
-        // Route::get('/categories/{id}/products', [UserProductController::class, 'showByCategory'])->name('productsByCategory');
-    
+         // Categories
+    Route::get('/categories', [UserCategoryController::class, 'index'])->name('categories.index');
+    Route::get('/categories/{id}', [UserCategoryController::class, 'show'])->name('categories.show');
+
+    // Products
+    Route::get('/products', [UserProductController::class, 'index'])->name('products.index');
+    Route::get('/categories/{id}/products', [UserProductController::class, 'showByCategory'])->name('productsByCategory');
+
         // Cart
         Route::get('/cart', [CartController::class, 'index'])->name('cart');
         Route::post('/cart/add/{id}', [CartController::class, 'add'])->name('addToCart');

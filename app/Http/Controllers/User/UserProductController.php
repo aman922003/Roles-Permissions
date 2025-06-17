@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
 
-class ProductController extends Controller
+class UserProductController extends Controller
 {
 
     public function index()
@@ -19,6 +19,6 @@ class ProductController extends Controller
     {
         $category = Category::findOrFail($id);
         $products = $category->products()->paginate(10);
-        return view('user.products.by_category', compact('products', 'category'));
+        return view('users.products.by_category', compact('products', 'category'));
     }
 }

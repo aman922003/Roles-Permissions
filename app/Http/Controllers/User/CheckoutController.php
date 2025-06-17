@@ -75,8 +75,6 @@ class CheckoutController extends Controller
 
     session()->forget('cart');
 
-    return redirect()->route('admin.orders')->with('success', 'Order placed successfully!');
+    return redirect()->route('dashboard')->with('success', 'Order placed successfully!');
 }
-
-    
 }

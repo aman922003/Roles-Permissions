@@ -65,6 +65,22 @@
                 </div>
                 @endcan
 
+                @can('view orders')
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('admin.orders')" :active="request()->routeIs('dashboard')">
+                        {{ __('Orders') }}
+                    </x-nav-link>
+                </div>
+                @endcan
+
+                @can('view usercategories')
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('users.categories.index')" :active="request()->routeIs('dashboard')">
+                        {{ __('Categories') }}
+                    </x-nav-link>
+                </div>
+                @endcan                
+
                 @can('view user cart')
                 @php
                 $cart = session('cart', []);

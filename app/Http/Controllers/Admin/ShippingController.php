@@ -15,12 +15,12 @@ class ShippingController extends Controller
             'region'  => ['required', 'string', 'min:2', 'max:100'],
             'city'    => ['required', 'string', 'min:2', 'max:100'],
             'phone'   => ['required', 'string', 'regex:/^\+?[0-9]{10,15}$/'],
-            'zipcode' => ['required', 'string', 'min:4', 'max:10'],
+            'zip' => ['required', 'string', 'min:4', 'max:10'],
             'country' => ['required', 'string', 'min:2', 'max:100'],
         ]);        
 
         $shippingDetail->update($data);
-        return back()->with('success', 'Shipping details updated.');
+        return redirect()->route('admin.orders')->with('success', 'Shipping details updated.');
     }
 }
 
