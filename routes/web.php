@@ -8,6 +8,7 @@ use App\Http\Controllers\User\CheckoutController;
 use App\Http\Controllers\User\UserCategoryController;
 use App\Http\Controllers\User\UserProductController;
 use App\Http\Controllers\User\OrdersController;
+use App\Http\Controllers\WebhookController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProfileController;
@@ -107,6 +108,10 @@ Route::prefix('admin')
     Route::middleware(['auth'])->prefix('orders')->name('users.orders.')->group(function () {
         Route::get('/', [OrdersController::class, 'index'])->name('index');
         Route::get('/my-orders/{order}', [OrdersController::class, 'show'])->name('show');
-
     });
     
+    // Route::get('stripe',[StripeController::class,'index']);
+
+// routes/api.php
+
+Route::post('/stripe/webhook', [WebhookController::class, 'handleWebhook']);

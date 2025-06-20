@@ -4,7 +4,10 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\Product;
 use App\Models\OrderItem;
+use Stripe\Stripe;
+use Stripe\Checkout\Session as StripeSession;
 use App\Models\ShippingDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,7 +27,9 @@ class CheckoutController extends Controller
     }
     
 // Place Order Functionalities
-    public function placeOrder(Request $request)
+
+
+public function placeOrder(Request $request)
 {
     $data = $request->validate([
         'address' => ['required', 'string', 'min:5'],
@@ -40,7 +45,7 @@ class CheckoutController extends Controller
         'total' => ['required', 'numeric'],
     ]);
 
-    // 1. Create Order first
+
     $order = Order::create([
         'user_id' => Auth::id(),
         'subtotal' => $data['subtotal'],
@@ -51,10 +56,10 @@ class CheckoutController extends Controller
         'status' => 'pending',
     ]);
 
-    // 2. Create ShippingDetail with order_id
+    
     ShippingDetail::create([
         'user_id' => Auth::id(),
-        'order_id' => $order->id, 
+        'order_id' => $order->id,
         'address' => $data['address'],
         'region' => $data['region'],
         'city' => $data['city'],
@@ -63,7 +68,8 @@ class CheckoutController extends Controller
         'zip' => $data['zip'],
     ]);
 
-    // 3. Save Order Items
+    $lineItems = [];
+
     foreach (session('cart', []) as $productId => $item) {
         OrderItem::create([
             'order_id' => $order->id,
@@ -71,10 +77,35 @@ class CheckoutController extends Controller
             'quantity' => $item['quantity'],
             'price' => $item['price'],
         ]);
+
+        // Fetch product from DB to get Stripe Price ID
+        $product = Product::find($productId);
+
+        if ($product && $product->stripe_price_id) {
+            $lineItems[] = [
+                'price' => $product->stripe_price_id,
+                'quantity' => $item['quantity'],
+            ];
+        }
     }
 
     session()->forget('cart');
 
-    return redirect()->route('dashboard')->with('success', 'Order placed successfully!');
+    // Stripe Checkout Session
+    Stripe::setApiKey(config('services.stripe.secret'));
+
+    $checkoutSession = StripeSession::create([
+        'payment_method_types' => ['card'],
+        'line_items' => $lineItems,
+        'mode' => 'payment',
+        'success_url' => route('dashboard') . '?success=true&order_id=' . $order->id,
+        'cancel_url' => route('users.checkout') . '?cancelled=true',
+        'metadata' => [
+            'order_id' => $order->id,
+        ],
+    ]);
+
+    return redirect($checkoutSession->url);
 }
+
 }
